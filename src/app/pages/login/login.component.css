@@ -1,0 +1,83 @@
+[nz-form] {
+  max-width: 800px;
+  font-size: 20px;
+}
+body{
+  overflow:hidden;
+}
+.login-content{
+  position: relative;
+  width: 177%;
+  height: 650%;
+  background: url(https://testing.imed.org.cn//mvw-exam-temp/pc/shenhe/2019NDbg.a55bd362f9e0754e5fd6.jpg);
+  min-width:800px;
+  overflow-y: hidden;
+}
+.login-content-header{
+  text-align: center;
+  margin-top:30px;
+  
+}
+.header-title{
+  color: #fff;
+  font-weight: bolder;
+}
+.header-subtitle{
+  color: #fff;
+  padding: 10px 0 16px;
+  font-weight: bolder;
+}
+button {
+  margin-left: 8px;
+}
+.zhupei{
+  position: absolute;
+  top:15%;
+  left:30%;
+  width:600px;
+  height:auto;
+  overflow-y: hidden;
+  border-radius: 10px;
+  background:#fff;
+}
+.zhupei ul{
+  width:100%;
+  padding:0;
+  
+}
+.zhupei ul li{
+  list-style: none;
+  width:50%;
+  border:1px solid #ccc;
+  display: inline-block;
+  text-align: center;
+  height:40px;
+  line-height: 40px;
+  font-size:20px;
+  cursor: pointer;
+  
+}
+.zhupei  .login-list{
+  width:100%;
+ 
+
+}
+.loginForm{
+  width:100%;
+
+}
+.active{
+  background:#1890ff;
+  color:#fff;
+  border-bottom: 1px solid #fff;
+}
+.hide{
+  display:none;
+}
+.loginmessage{
+  width:100%;
+  text-align: center;
+  color:#fff;
+  font-size: 2em;
+  margin-bottom: 5px;
+}

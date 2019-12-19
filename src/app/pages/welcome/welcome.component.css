@@ -1,0 +1,68 @@
+.home-wrapper {
+  height: 100%;
+  width:1440px;
+  max-width: 1440px;
+  min-width: 100%;
+  overflow-x: hidden;
+}
+
+/* 该组件的宿主元素（也就是父级元素） */
+ :host {
+  background-color: #f00;
+} 
+
+:host ::ng-deep .logo {
+  height: 64px;
+  background: rgba(255, 255, 255);
+}
+
+:host ::ng-deep .logo img {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.home-wrapper .logout {
+  position: absolute;
+  top: 0;
+  right:20px;
+  height: 40px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.home-wrapper .logout:focus {
+  text-decoration: none;
+}
+.singlebgcolor{
+  background-color: #1890ff;
+}
+/* .logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 30px 16px 0;
+  float: left;
+}
+
+.header-menu {
+  line-height: 64px;
+}
+
+.sider-menu {
+  height: 100%;
+  border-right: 0;
+}
+
+.inner-layout {
+  padding: 0 24px 24px;
+}
+
+nz-breadcrumb {
+  margin: 16px 0;
+}
+
+nz-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+} */

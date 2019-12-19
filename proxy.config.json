@@ -1,0 +1,12 @@
+
+{
+    "/api": {
+        "target":"https://testgps.imed.org.cn",
+        "secure":false,
+        "logLevel":"debug",
+        "changeOrigin":true,
+        "pathRewrite": {
+            "^/api": "/"
+        }
+    }
+ }

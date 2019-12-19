@@ -1,0 +1,273 @@
+<div class="userinfo-main">
+    <div class="userinfo-header">
+        <div class="userinfo-header-top">
+            <form nz-form (ngSubmit)="submitForm()" [formGroup]="loginForm" class="loginForm">
+                <nz-form-item class="search">
+                    <nz-form-label [nzSpan]="7" style="font-size: 16px;line-height: 30px;">参培专业</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <nz-select style="width: 150px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
+                            formControlName="provincename" [(ngModel)]="singlePro">
+                            <nz-option *ngFor="let singlePro of provinceTextList" [nzValue]="singlePro.code"
+                                [nzLabel]="singlePro.value">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item class="search">
+                    <nz-form-label [nzSpan]="7" style="font-size: 16px;line-height: 30px;">参培年份</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <nz-select style="width: 150px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
+                            formControlName="basename">
+                            <nz-option *ngFor="let singleBase of basename" [nzValue]="singleBase.code"
+                                [nzLabel]="singleBase.value"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+
+                </nz-form-item>
+                <nz-form-item class="search">
+
+                    <nz-form-label [nzSpan]="7" style="font-size: 16px;line-height: 30px;">审核状态</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <nz-select style="width: 150px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
+                            formControlName="subjectname">
+                            <nz-option *ngFor="let singlesub of applyMajorList" [nzValue]="singlesub.code"
+                                [nzLabel]="singlesub.text">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item class="search">
+                    <nz-form-label [nzSpan]="7" style="font-size: 16px;line-height: 30px;">学员类型</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <nz-select style="width: 150px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
+                            formControlName="subjectname">
+                            <nz-option *ngFor="let singlesub of applyMajorList" [nzValue]="singlesub.code"
+                                [nzLabel]="singlesub.text">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+
+               
+            </form>
+            <div>
+                <button nz-button nzType="primary">所选审核通过</button>
+                <button nz-button nzType="primary">所选审核不通过</button>
+                <button nz-button nzType="primary">全部审核通过</button>
+
+            </div>
+
+
+            <!-- <div>
+                  
+                <label for="">参培专业 : </label>
+
+                <select name="ascf" id="" [(ngModel)]="subjectvalue">
+                    <option *ngFor="let singlesubject of serve.applyMajorList" value="{{singlesubject.code}}"
+                        label="{{singlesubject.text}}">
+                    </option>
+                </select>
+
+            </div>
+            <div>
+                <label for="">参培年份 : </label>
+                <nz-month-picker formControlName="joinBaseTime"></nz-month-picker>
+
+                <select name="ascfa" id="" [(ngModel)]="yearvalue">
+                    <option *ngFor="let singlesyear of year" value="{{singlesyear}}">{{singlesyear}}
+                    </option>
+                </select>
+
+            </div>
+            <div>
+                <label for="">审核状态 : </label>
+                <select name="ascf" id="" [(ngModel)]="verifyalue">
+                    <option *ngFor="let option of auditStatusTypes" value="{{option.code}}" label="{{option.value}}">
+
+                </select>
+
+            </div>
+        </div>
+        <div class="userinfo-header-top">
+            <div>
+                <label for="">学历 :</label>
+                <select name="ascf" id="" [(ngModel)]="recordvalue">
+                    <option *ngFor="let singlerecored of educationTypes" value="{{singlerecored.code}}"
+                        label={{singlerecored.value}}>
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label for="">学员类型 :</label>
+                <select name="ascf" id="" [(ngModel)]="usertypevalue">
+                    <option *ngFor="let singleusertype of staffTypes" value="{{singleusertype.code}}"
+                        label="{{singleusertype.value}}">
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label for="">姓名/手机号:</label>
+                <input type="text" name="" id="" placeholder=" 姓名/手机号/省份证">
+            </div>
+            <input type="button" name="" id="" value="查询" class="btn" (click)="searchBtnInfo()">
+            <input type="button" value="导出" class="btn"> 
+        </div> -->
+            <!-- <div class="verifibtn">
+            <input type="button" name="" id="" value="所选审核通过" class="btn" (click)="selectpass()">
+            <input type="button" value="所选审核不通过" class="btn" (click)="selectnopass()">
+            <input type="button" name="" id="" value="全部审核通过" class="btn" (click)="selectallpass()">
+        </div> -->
+
+
+        </div>
+        <nz-table nzShowSizeChanger nzBordered [nzFrontPagination]="false" [nzData]="basedataAry" [nzTotal]="total"
+            [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" [nzShowSizeChanger]="true"
+            (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)"
+            [nzScroll]="{ x: '1340px', y: '450px' }">
+            <thead>
+                <tr>
+                    <th nzWidth="40px">序号</th>
+                    <th nzWidth="40px" nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked"
+                        [nzIndeterminate]="isIndeterminate" (nzCheckedChange)="checkAll($event)"></th>
+                    <th nzWidth="180px">操作</th>
+                    <th nzWidth="100px">审核状态</th>
+                    <th nzWidth="100px">姓名</th>
+                    <th nzWidth="100px">手机号</th>
+                    <th nzWidth="150px">证件号</th>
+                    <th nzWidth="200px">参培基地名称</th>
+                    <th nzWidth="100px">参培专业</th>
+                    <th nzWidth="100px">参培年份</th>
+                    <th nzWidth="100px">学员类型</th>
+                    <th nzWidth="100px">学历</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basedataAry;let i=index" class="tablecontent">
+                    <td>{{i+1}}</td>
+                    <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="selectinfo(i)"></td>
+                    <!-- <td nzShowCheckbox [(ngModel)]="arylists.checked"></td> -->
+                    <td style=" word-break: break-all">
+                        <span class="operate check" (click)="checkinfo(i)">查看</span>
+                        <span class="operate pass checkpass" (click)="passinfo(i)" [ngClass]="{'hide': data.flag}"
+                            id="checkpass">审核通过</span>
+                        <br>
+
+                        <span class="operate revise" (click)="reviseinfo(i)">修改</span>
+                        <span class="operate nopass" (click)="nopassinfo(i)"
+                            [ngClass]="{'hide': data.noflag}">审核不通过</span>
+                    </td>
+                    <td [ngClass]="{'showstyle': data.noflag,'passstyle':data.passflag}">{{data.state}}</td>
+                    <td style="word-break: break-all">{{ data.name}}</td>
+                    <td>{{ data.shopTel}}</td>
+                    <td>{{data.idcardnum}}</td>
+                    <td>{{ data.basename }}</td>
+                    <td>{{ data.trainmajor }}</td>
+                    <td>2019</td>
+                    <td>{{data.stafftype}}</td>
+                    <td>{{data.noweducation}}</td>
+                </tr>
+
+            </tbody>
+        </nz-table>
+
+    </div>
+     <div class="checkinfo" style="display: none;" id="movebox">
+        <div appMove class="checkinfomove">
+            <div class="checkinfo-header">
+                <p>查看用户</p>
+                <span class="checkinfo-close" (click)="checkinfoClose()"><i nz-icon nzType="close"
+                        nzTheme="outline"></i></span>
+
+            </div>
+            <div class="checkinfo-content">
+                <form action="" nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="saveBtnInfo()">
+                    <nz-collapse>
+                        <nz-collapse-panel nzHeader="基本信息" nzActive="true">
+                            <nz-form-item class="page-form-item">
+                                <nz-form-label [nzSpan]="6" nzRequired nzFor="userName">姓名</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="">
+                                    <input nz-input type="text" placeholder="请输入姓名"
+                                        [(ngModel)]="singlebasedataAry.username" formControlName="userName" />
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item class="page-form-item">
+                                <nz-form-label [nzSpan]="6" nzRequired nzFor="userSex">性别</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="">
+                                    <nz-select formControlName="userSex" [(ngModel)]="userSex" nzPlaceHolder="请选择性别">
+                                        <nz-option *ngFor="let option of userSexList" [nzValue]="option.code"
+                                            [nzLabel]="option.text"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item class="page-form-item">
+                                <nz-form-label [nzSpan]="6" nzRequired nzFor="userNation">民族</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="">
+                                    <input nz-input type="text" [disabled]="this.type=='see'" placeholder="请输入民族"
+                                        [(ngModel)]="singlebasedataAry.usernation" formControlName="userNation" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </nz-collapse-panel>
+                    </nz-collapse>
+                    <nz-collapse>
+                        <nz-collapse-panel nzHeader="基本信息" nzActive="true">
+                            <nz-form-item class="page-form-item">
+                                <nz-form-label [nzSpan]="6" nzRequired nzFor="userName">姓名</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="">
+                                    <input nz-input type="text" placeholder="请输入姓名"
+                                        [(ngModel)]="singlebasedataAry.username" formControlName="userName" />
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item class="page-form-item">
+                                <nz-form-label [nzSpan]="6" nzRequired nzFor="userSex">性别</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="">
+                                    <nz-select formControlName="userSex" [(ngModel)]="userSex" nzPlaceHolder="请选择性别">
+                                        <nz-option *ngFor="let option of userSexList" [nzValue]="option.code"
+                                            [nzLabel]="option.text"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item class="page-form-item">
+                                <nz-form-label [nzSpan]="6" nzRequired nzFor="userNation">民族</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="">
+                                    <input nz-input type="text" [disabled]="this.type=='see'" placeholder="请输入民族"
+                                        [(ngModel)]="singlebasedataAry.usernation" formControlName="userNation" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </nz-collapse-panel>
+                    </nz-collapse>
+                    <nz-collapse>
+                        <nz-collapse-panel nzHeader="基本信息" nzActive="true">
+                            <nz-form-item class="page-form-item">
+                                <nz-form-label [nzSpan]="6" nzRequired nzFor="userName">姓名</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="">
+                                    <input nz-input type="text" placeholder="请输入姓名"
+                                        [(ngModel)]="singlebasedataAry.username" formControlName="userName" />
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item class="page-form-item">
+                                <nz-form-label [nzSpan]="6" nzRequired nzFor="userSex">性别</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="">
+                                    <nz-select formControlName="userSex" [(ngModel)]="userSex" nzPlaceHolder="请选择性别">
+                                        <nz-option *ngFor="let option of userSexList" [nzValue]="option.code"
+                                            [nzLabel]="option.text"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item class="page-form-item">
+                                <nz-form-label [nzSpan]="6" nzRequired nzFor="userNation">民族</nz-form-label>
+                                <nz-form-control [nzSpan]="17" nzErrorTip="">
+                                    <input nz-input type="text" [disabled]="this.type=='see'" placeholder="请输入民族"
+                                        [(ngModel)]="singlebasedataAry.usernation" formControlName="userNation" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </nz-collapse-panel>
+                    </nz-collapse>
+
+                </form>
+            </div>
+
+           
+        </div>
+    </div>
+    <!-- <div class="mask" [ngClass]="{'hide': flag}"></div> -->
+    </div> 

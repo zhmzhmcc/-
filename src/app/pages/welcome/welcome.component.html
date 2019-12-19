@@ -1,0 +1,88 @@
+<nz-layout class="home-wrapper">
+  <nz-header
+    style="background: #fff; padding:0;max-width:100%;color: rgba(26, 19, 19, 0.65);font-size: 1.5em;overflow: hidden;">
+    <!-- 添加头像和退出 -->
+    <div nz-row nzType="flex">
+
+      <div title="titleLeft" nzspan="12" nz-col style="margin-left: 25px;">
+        <p >2019年住院医师规范化培训年度业务水平测试(西医)<span>——考生信息审核表</span></p>
+      </div>
+      <div title="titleRight" nzspan="12" nz-col style="margin-left: 325px;">
+        <p appMove>您好，欢迎登录年度考核系统</p>
+        <p (click)="loginOut()" href="#" class="logout" > 
+          &nbsp;&nbsp;【退出登录】
+        </p>
+      </div>
+    </div>
+  </nz-header>
+  <nz-layout style="height:auto">
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzCollapsedWidth]="0" [nzBreakpoint]="'sm'"
+      style="height:auto;background:#fff;width:160px;  flex: 0 0 170px; max-width: 160px; min-width: 160px">
+      <ul nz-menu [nzTheme]="'dark'" [nzMode]="isCollapsed?'vertical':'inline'">
+        <li nz-submenu>
+          <span title ><i nz-icon nzType="user" nzTheme="outline"></i>用户列表</span>
+          <ul>
+            <!-- <li nz-menu-item  (click)="togglechildrenpath()">员工列表</li>
+            <li nz-menu-item routerLink="/home/employee/add">员工添加</li> -->
+            <li nz-menu-item  *ngFor="let singlechildrenpathlist of childrenpathlist" 
+            [ngClass]="{'singlebgcolor': singlechildrenpathlist.active}" (click)="togglechildrenpath(singlechildrenpathlist.path,i)">
+            {{singlechildrenpathlist.title}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-content style="margin:24px 16px 0;">
+      <div style="padding:24px; background: #fff; min-height: 600px;">
+
+        <!-- 子路由的出口，用来加载 员工管理 等模块-->
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <!-- <nz-footer style="text-align: center;">博学谷 © 2016-2018</nz-footer> -->
+  </nz-layout>
+</nz-layout>
+<!-- <nz-layout>
+          <nz-header style=" width: 411%;">
+            <div class="logo"></div>
+            <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+              <li nz-menu-item nzSelected>nav 1</li>
+              <li nz-menu-item>nav 2</li>
+              <li nz-menu-item>nav 3</li>
+            </ul>
+          </nz-header>
+          <nz-layout>
+            <nz-sider nzWidth="200px" nzTheme="light">
+              <ul nz-menu nzMode="inline" class="sider-menu">
+                <li nz-submenu nzOpen nzIcon="user" nzTitle="subnav 1">
+                  <ul>
+                    <li nz-menu-item nzSelected>option1</li>
+                    <li nz-menu-item>option2</li>
+                    <li nz-menu-item>option3</li>
+                    <li nz-menu-item>option4</li>
+                  </ul>
+                </li>
+                <li nz-submenu nzTitle="subnav 2" nzIcon="laptop">
+                  <ul>
+                    <li nz-menu-item>option5</li>
+                    <li nz-menu-item>option6</li>
+                    <li nz-menu-item>option7</li>
+                    <li nz-menu-item>option8</li>
+                  </ul>
+                </li>
+                <li nz-submenu nzTitle="subnav 3" nzIcon="notification">
+                  <ul>
+                    <li nz-menu-item>option9</li>
+                    <li nz-menu-item>option10</li>
+                    <li nz-menu-item>option11</li>
+                    <li nz-menu-item>option12</li>
+                  </ul>
+                </li>
+              </ul>
+            </nz-sider>
+            <nz-layout class="inner-layout">
+              
+              <nz-content style="min-width: 100%">Content</nz-content>
+            </nz-layout>
+          </nz-layout>
+        </nz-layout> -->

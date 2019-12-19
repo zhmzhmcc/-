@@ -1,0 +1,141 @@
+.userinfo-header-top{
+    width:100%;
+    font-size:16px;
+}
+.userinfo-header-top div{
+    width:100%;
+    float: left;
+    margin-top: 20px;
+}
+.userinfo-header-top div button{
+    margin-left:10px;
+    margin-bottom:20px;
+}
+.userinfo-header-top div  label{
+    width:100px;
+    text-align: right;
+    display: inline-block;
+}
+.userinfo-header-top div input{
+    outline: none;
+    border:1px solid #a9a9a9;
+}
+input::-webkit-input-placeholder{
+    color:#ccc
+}
+.userinfo-header-top .btn{
+    width:60px;
+    height:30px;
+    background:#169bd5;
+    border:solid 1px #169bd5;
+    margin-left: 10px;
+    margin-top: 64px;
+    border-radius: 4px;
+    color:#fff
+
+}
+.verifibtn {
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+.verifibtn .btn{
+    width:120px;
+    height:30px;
+    background:#169bd5;
+    border:solid 1px #169bd5;
+    border-radius: 4px;
+    color:#fff;
+    margin-left: 10px;
+
+}
+.checkinfo{
+    width:800px;
+    height:600px;
+    position: absolute;
+    top:100px;
+    left:350px;
+    z-index: 999;
+    border-radius: 4px;
+
+}
+.checkinfo-content{
+    width:800px;
+    height:500px;
+    margin-top:30px;
+    padding:0 10px;
+    overflow-y: scroll;
+
+}
+.checkinfomove{
+    width:800px;
+    height:600px;
+    background:#fff;
+    position: absolute;
+    top:0px;
+    left:-20px;
+    border-radius: 4px;
+
+}
+.ant-form-inline .ant-form-item{
+    display: inline;
+}
+.ant-collapse-content > .ant-collapse-content-box{
+    padding-left:20px;
+}
+.checkinfo-header{
+    position: relative;
+    height:40px;
+    border-bottom:1px solid #ccc;
+    text-align: center;
+    font-size: 1.3em;
+    line-height: 40px;
+}
+.checkinfo-close{
+    position: absolute;
+    top:0;
+    left:760px;
+}
+.hide{
+    display: none;
+}
+.dataopera span{
+    cursor: pointer;
+    background:#169bd5;
+    margin:2px 4px ;
+    color:#fff;
+    padding:2px 4px;
+}
+.mask{
+    /* width:100%;
+    height:100%; */
+    overflow-y: hidden;
+    background:rgb(36, 34, 34);
+    position: fixed;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.4;
+    z-index: 1;
+}
+.operate{
+    cursor: pointer;
+    margin:2px 5px ;
+    color:rgb(134, 175, 9);
+}
+.hide{
+    display:none ;
+
+}
+.showstyle{
+    color:red
+}
+.passstyle{
+    color: #67A1DD
+}
+::ng-deep .search{
+    display: inline-block;
+    width:25%;
+    margin-bottom: 0em;
+
+}
