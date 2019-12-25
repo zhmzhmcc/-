@@ -1,23 +1,23 @@
 <div class="userinfo-main">
     <div class="userinfo-header">
         <div class="userinfo-header-top">
-            <form nz-form (ngSubmit)="submitForm()" [formGroup]="loginForm" class="loginForm">
+            <form nz-form (ngSubmit)="searchForm()" [formGroup]="contentForm" class="loginForm">
                 <nz-form-item class="search">
-                    <nz-form-label [nzSpan]="7" style="font-size: 16px;line-height: 30px;">参培专业</nz-form-label>
+                    <nz-form-label [nzSpan]="7" style="font-size: 16px;">学院</nz-form-label>
                     <nz-form-control [nzSm]="14" [nzXs]="24">
                         <nz-select style="width: 150px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
-                            formControlName="provincename" [(ngModel)]="singlePro">
-                            <nz-option *ngFor="let singlePro of provinceTextList" [nzValue]="singlePro.code"
+                            formControlName="collegename" [(ngModel)]="singlecollege">
+                            <nz-option *ngFor="let singlePro of collegeTextList" [nzValue]="singlePro.code"
                                 [nzLabel]="singlePro.value">
                             </nz-option>
                         </nz-select>
                     </nz-form-control>
                 </nz-form-item>
                 <nz-form-item class="search">
-                    <nz-form-label [nzSpan]="7" style="font-size: 16px;line-height: 30px;">参培年份</nz-form-label>
+                    <nz-form-label [nzSpan]="7" style="font-size: 16px;">年级</nz-form-label>
                     <nz-form-control [nzSm]="14" [nzXs]="24">
                         <nz-select style="width: 150px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
-                            formControlName="basename">
+                            formControlName="grade">
                             <nz-option *ngFor="let singleBase of basename" [nzValue]="singleBase.code"
                                 [nzLabel]="singleBase.value"></nz-option>
                         </nz-select>
@@ -26,10 +26,10 @@
                 </nz-form-item>
                 <nz-form-item class="search">
 
-                    <nz-form-label [nzSpan]="7" style="font-size: 16px;line-height: 30px;">审核状态</nz-form-label>
+                    <nz-form-label [nzSpan]="7" >专业</nz-form-label>
                     <nz-form-control [nzSm]="14" [nzXs]="24">
-                        <nz-select style="width: 150px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
-                            formControlName="subjectname">
+                        <nz-select style="width: 150px;height:20px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
+                            formControlName="speciality">
                             <nz-option *ngFor="let singlesub of applyMajorList" [nzValue]="singlesub.code"
                                 [nzLabel]="singlesub.text">
                             </nz-option>
@@ -37,15 +37,19 @@
                     </nz-form-control>
                 </nz-form-item>
                 <nz-form-item class="search">
-                    <nz-form-label [nzSpan]="7" style="font-size: 16px;line-height: 30px;">学员类型</nz-form-label>
+                    <nz-form-label [nzSpan]="7" >姓名</nz-form-label>
                     <nz-form-control [nzSm]="14" [nzXs]="24">
-                        <nz-select style="width: 150px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
-                            formControlName="subjectname">
-                            <nz-option *ngFor="let singlesub of applyMajorList" [nzValue]="singlesub.code"
-                                [nzLabel]="singlesub.text">
-                            </nz-option>
-                        </nz-select>
+                        <input nz-input formControlName="searchname" type="text" class="searchText">
                     </nz-form-control>
+                </nz-form-item>
+                <nz-form-item class="search" style="margin-left:-25px;">
+                    <nz-form-label [nzSpan]="7" >学号</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <input nz-input formControlName="searchNum" type="text" class="searchText">
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item  style="margin-bottom: 0em;position: absolute;right: 80px;top: 115px;" class="search-btn">
+                    <button nz-button nzType="primary" (click)="searchData()"><i nz-icon nzType="search"></i>查询</button>
                 </nz-form-item>
 
                
@@ -132,13 +136,11 @@
                     <th nzWidth="180px">操作</th>
                     <th nzWidth="100px">审核状态</th>
                     <th nzWidth="100px">姓名</th>
-                    <th nzWidth="100px">手机号</th>
-                    <th nzWidth="150px">证件号</th>
-                    <th nzWidth="200px">参培基地名称</th>
-                    <th nzWidth="100px">参培专业</th>
-                    <th nzWidth="100px">参培年份</th>
-                    <th nzWidth="100px">学员类型</th>
-                    <th nzWidth="100px">学历</th>
+                    <th nzWidth="100px">学号</th>
+                    <th nzWidth="150px">学院</th>
+                    <th nzWidth="200px">年级</th>
+                    <th nzWidth="100px">专业</th>
+                   
                 </tr>
             </thead>
             <tbody>
@@ -162,9 +164,7 @@
                     <td>{{data.idcardnum}}</td>
                     <td>{{ data.basename }}</td>
                     <td>{{ data.trainmajor }}</td>
-                    <td>2019</td>
-                    <td>{{data.stafftype}}</td>
-                    <td>{{data.noweducation}}</td>
+                    
                 </tr>
 
             </tbody>

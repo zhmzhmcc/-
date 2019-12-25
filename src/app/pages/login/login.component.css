@@ -2,82 +2,84 @@
   max-width: 800px;
   font-size: 20px;
 }
-body{
-  overflow:hidden;
-}
+
 .login-content{
   position: relative;
-  width: 177%;
-  height: 650%;
-  background: url(https://testing.imed.org.cn//mvw-exam-temp/pc/shenhe/2019NDbg.a55bd362f9e0754e5fd6.jpg);
-  min-width:800px;
-  overflow-y: hidden;
+  width:100vw;
+  height:100vh;
+  /* background:red; */
+  background:  url('../../../assets/login.png') center center/100vw  no-repeat;
 }
-.login-content-header{
-  text-align: center;
-  margin-top:30px;
-  
+.login-header{
+  font-size: 2.5em;
+  padding-left:200px;
+  padding-top:20px;
 }
-.header-title{
-  color: #fff;
-  font-weight: bolder;
+.login-intro{
+  padding-left:320px ;
+  font-size:1.4em ;
 }
-.header-subtitle{
-  color: #fff;
-  padding: 10px 0 16px;
-  font-weight: bolder;
-}
-button {
-  margin-left: 8px;
-}
-.zhupei{
+.phoneNum{
   position: absolute;
-  top:15%;
-  left:30%;
-  width:600px;
-  height:auto;
-  overflow-y: hidden;
-  border-radius: 10px;
+  right: 201px;
+  font-size: 1.7em;
+  top: 40px;
+}
+.FormGroup{
+  width:400px;
+  height:360px;
+  position: absolute;
+  right:115px;
+  top:160px;
   background:#fff;
+  border-radius: 1em;
 }
-.zhupei ul{
+.formGroup{
+  width:450px;
+  height:488px;
+  position: absolute;
+  right:115px;
+  top:132px;
+  background:#fff;
+  border-radius: 1em;
+}
+.login-user{
   width:100%;
-  padding:0;
-  
-}
-.zhupei ul li{
-  list-style: none;
-  width:50%;
-  border:1px solid #ccc;
-  display: inline-block;
   text-align: center;
-  height:40px;
-  line-height: 40px;
-  font-size:20px;
+  font-size: 1.7em;
+  margin-top:15px;
+  color:rgb(57, 100, 180) ;
+  margin-bottom: 15px;
+}
+.login-btn{
+  width:300px;
+  margin:0 50px;
+  height:35px;
+}
+.login-register{
+  width: auto;
+  text-align: right;
+  position: absolute;
+  right: 57px;
+  top: 44px;
+  color:rgb(73, 134, 224);
   cursor: pointer;
-  
 }
-.zhupei  .login-list{
-  width:100%;
- 
-
+.form-item{
+  margin-bottom: 7px;
 }
-.loginForm{
-  width:100%;
-
-}
-.active{
-  background:#1890ff;
+.login-register-btn{
+  width:300px;
+  margin:0 70px;
+  background:#40a9ff;
   color:#fff;
-  border-bottom: 1px solid #fff;
-}
-.hide{
-  display:none;
-}
-.loginmessage{
+  margin-top:10px;
+} 
+.register-user{
   width:100%;
   text-align: center;
-  color:#fff;
-  font-size: 2em;
-  margin-bottom: 5px;
+  font-size: 1.7em;
+  margin-top:15px;
+  color:rgb(57, 100, 180) ;
+  margin-bottom: 15px;
 }

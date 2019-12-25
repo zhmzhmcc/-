@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { NzMessageService, NzModalService, isTemplateRef } from 'ng-zorro-antd';
 import { SaveTwoTone } from '@ant-design/icons-angular/icons/public_api';
 import { cloneSVG } from '@ant-design/icons-angular';
+import { TimeHolder } from 'ng-zorro-antd/time-picker/time-holder';
 
 
 @Component({
@@ -22,11 +23,9 @@ export class UserinfoComponent implements OnInit {
   
 
   // 审核状态类型
-  auditStatusTypes: any = [
-    { 'code': "-1", "value": "请选择" },
-    { 'code': "0", "value": "未审核" },
-    { 'code': "1", "value": "审核通过" },
-    { 'code': "2", "value": "审核不通过" },
+  collegeTextList: any = [
+    { 'code': "0", "value": "信工学院" },
+    { 'code': "1", "value": "演艺学院" },
   ];
   // 学历类型
   educationTypes: any = [
@@ -45,15 +44,12 @@ export class UserinfoComponent implements OnInit {
     { "value": '全日制硕士专业研究生', 'code': '3' },
     { "value": '其他人员', 'code': '4' }
   ];
+  //学院
   listOfData: any;
   subjectvalue: any = '-1';
   year = ['请选择', '2013', '2014', '2015', '2106', '2107', '2018', '2019'];
   record = ''
   usertype = ''
-  yearvalue = "请选择"
-  verifyalue = "请选择"
-  recordvalue = "请选择"
-  usertypevalue = "请选择"
   alltag: boolean = false;
   checkarry = [];
   flag: boolean = true;
@@ -71,7 +67,7 @@ export class UserinfoComponent implements OnInit {
   flagnopass: boolean = false;
   mularry = new Array();
   basedata;
-  validateForm: FormGroup;
+  contentForm: FormGroup;
   listOfSelection = [
     {
       text: 'Select All Row',
@@ -105,6 +101,7 @@ export class UserinfoComponent implements OnInit {
   opFlag: any;
   data: any;
   noflag: any;
+  searchId: any;
   
 
   constructor(private fb: FormBuilder, private route: Router,
@@ -116,24 +113,22 @@ export class UserinfoComponent implements OnInit {
     console.log(this.basedataAry)
     //this.serve.getMajorData();
     //this.serve.getSexData();
-    this.http.get('http://localhost:3000/datas').subscribe((res)=>{
-              const userdatas=res['user']
+    this.http.get('http://localhost:3000/user').subscribe((res)=>{
+              console.log(res)
+              const userdatas=res             
               if (userdatas && Array.isArray(userdatas) && userdatas.length > 0){
-                this.basedataAry=userdatas.map((item)=>{
-                   const {state} = item; 
-                   return {
-                     ...item,
-                     noflag: state == '0' ? false : state == '2' ? true : '',
-                     flag: state == '0' ? false : state == '1' ? true : '',
-                     passflag : state == '0' ? false : state == '1' ? true : '',
-                     state : state == '0' ? '未审核': state == '1' ? '审核通过' : '审核未通过'
-                   }
-                })
+                this.basedataAry=this.verifyState(userdatas)
               }
-              this.flag=res['flag'];
-              
+              this.flag=res['flag'];     
        
     })
+    this.contentForm = this.fb.group({
+      collegename: [null, [Validators.required]],
+      grade: [null, [Validators.required]],
+      speciality: [null, [Validators.required]],
+      searchname: [null, [Validators.required]],
+      searchNum: [null, [Validators.required]]
+    });
     // this.http.get('https://easy-mock.com/mock/5df307236fffb769a4b09fda/shnehe/userinfo').subscribe((res)=>{
     //   console.log(res)
     // })
@@ -152,23 +147,46 @@ export class UserinfoComponent implements OnInit {
     //       nzOnOk:()=>{
     //         this.route.navigate(['/login'])
     //       }
-    //     });
-        
-    //   }
-      
-      
+    //     });   
+    //   }  
     // })
-    this.validateForm =this.fb.group({
-      userName: [null, [Validators.required]],
-      userSex: [null, [Validators.required]],
-      userNation: [null, [Validators.required]],
-    })
-
-   
+  }
+  //审核状态
+  verifyState(data){
+    const datas=data.map((item)=>{
+      const {state} = item; 
+      return {
+        ...item,
+        noflag: state == '0' ? false : state == '2' ? true : '',
+        flag: state == '0' ? false : state == '1' ? true : '',
+        passflag : state == '0' ? false : state == '1' ? true : '',
+        state : state == '0' ? '未审核': state == '1' ? '审核通过' : '审核未通过'
+      }
+   })
+   return datas
   }
   //form表单
   saveBtnInfo(){
-    
+  
+  }
+  //查询数据
+  searchForm(){
+    const contentForm = this.contentForm
+    const contentFormValue=contentForm.value
+    const searchnamevalue=contentFormValue.searchname;
+    const searchNum=contentFormValue.searchNum
+    this.basedataAry.map((item)=>{
+      if(searchnamevalue == item.name){
+       this.searchId=item.id
+       console.log(this.searchId)
+       this.http.get('http://localhost:3000/user/'+this.searchId).subscribe((res)=>{
+         const searchData=[]
+         searchData.push(res)
+        this.basedataAry =this.verifyState(searchData)
+      })
+      }else{
+      }
+    })
   }
   //翻页查询数据
 
@@ -282,8 +300,6 @@ export class UserinfoComponent implements OnInit {
   //           let basedata = datas['page'].result;
   //           this.total = datas['page'].total;
   //           this.basedataAry = basedata;
-
-
   //           if (this.basedataAry && Array.isArray(this.basedataAry) && this.basedataAry.length > 0) {
   //             this.basedataAry = this.basedataAry.map(item => {
 
@@ -310,16 +326,12 @@ export class UserinfoComponent implements OnInit {
     this.basedataAry.forEach((data, index) => {
       if (i === index) {
         if (this.mapOfCheckedId[data.id] == true) {
-
           this.multistr.push(data.id);
-
         } else {
           this.multistr.splice(this.multistr.indexOf(data.id), 1);
         }
       }
-
     })
-
     console.log(this.multistr);
 
   }
@@ -415,74 +427,69 @@ export class UserinfoComponent implements OnInit {
     }
   }
   //查询数据
-  searchBtnInfo() {
-  
-    this.basedataAry=[]
-    debugger
-    this.http.get("../../assets/dynamicData/applyMajor.json").subscribe((res) => {
-      this.applyMajorList = res['classify']
-      console.log(this.applyMajorList);
-  
-    })
-    this.http.post('/api/servicesXY', {
-      "serviceNumber": "selectInformationAcquisitionPage",
-      // "args": {
-      //   "trainmajor": "-1",
-      //   "pageNo": this.pageIndex,
-      //   "pageSize": this.pageSize,
-      //   "baseCode": "000000",
-      //   "nowEducation":this.recordvalue,
-      //   "staffType":this.usertypevalue,
+  // searchBtnInfo() {
+  //   this.basedataAry=[]
+  //   debugger
+  //   this.http.get("../../assets/dynamicData/applyMajor.json").subscribe((res) => {
+  //     this.applyMajorList = res['classify']
+  //     console.log(this.applyMajorList);
+  //   })
+  //   this.http.post('/api/servicesXY', {
+  //     "serviceNumber": "selectInformationAcquisitionPage",
+  //     // "args": {
+  //     //   "trainmajor": "-1",
+  //     //   "pageNo": this.pageIndex,
+  //     //   "pageSize": this.pageSize,
+  //     //   "baseCode": "000000",
+  //     //   "nowEducation":this.recordvalue,
+  //     //   "staffType":this.usertypevalue,
 
-      // }
-      "args":{"baseValue":"全部",
-      "baseCode":"000000",
-      "trainmajor":this.subjectvalue,
-      "joinBaseTime":null,"state":this.verifyalue,
-      "nowEducation":this.recordvalue,
-      "staffType":this.usertypevalue,
-      "userNum":null,"nameOfCompanyUnit":null,
-      "pageNo":1,"pageSize":10}    },
-      {
-        headers: new HttpHeaders({ 'Content-Type': 'text/plain; charset=UTF-8' }),
-        responseType: "text"
-      }).subscribe((res) => {
-        var data = JSON.parse(decodeURIComponent(res));
-        var datas = JSON.parse(data.serviceResult);
-        console.log(datas);
+  //     // }
+  //     "args":{"baseValue":"全部",
+  //     "baseCode":"000000",
+  //     "trainmajor":this.subjectvalue,
+  //     "userNum":null,"nameOfCompanyUnit":null,
+  //     "pageNo":1,"pageSize":10}    },
+  //     {
+  //       headers: new HttpHeaders({ 'Content-Type': 'text/plain; charset=UTF-8' }),
+  //       responseType: "text"
+  //     }).subscribe((res) => {
+  //       var data = JSON.parse(decodeURIComponent(res));
+  //       var datas = JSON.parse(data.serviceResult);
+  //       console.log(datas);
 
-        this.datas = datas;
-        let basedata = datas['page'].result;
-        this.total = datas['page'].total;
-        this.basedataAry = basedata;
-        this.multistr = [];
+  //       this.datas = datas;
+  //       let basedata = datas['page'].result;
+  //       this.total = datas['page'].total;
+  //       this.basedataAry = basedata;
+  //       this.multistr = [];
 
-        if (this.basedataAry && Array.isArray(this.basedataAry) && this.basedataAry.length > 0) {
-          this.basedataAry = this.basedataAry.map(item => {
+  //       if (this.basedataAry && Array.isArray(this.basedataAry) && this.basedataAry.length > 0) {
+  //         this.basedataAry = this.basedataAry.map(item => {
             
-            this.applyMajorList.map(data=>{
-              if(item.trainmajor==data.code){
-                console.log(data.text);
-                item.trainmajor=data.text
-              }
-            })
-            const { state } = item;
-            const { stafftype } = item;
-            const {noweducation}=item;
-            return {
-              ...item,
-              noflag: state == '0' ? false : state == '2' ? true : '',
-              flag: state == '0' ? false : state == '1' ? true : '',
-              state: state == '0' ? '未审核' : state == '1' ? '审核通过' : state == '2' ? '审核未通过' : '',
-              stafftype: stafftype == "0" ? '本单位住院医师' : stafftype == '1' ? '外单位委托培养住院医师' : stafftype == '2' ? '面向社会招收住院医师' : '',
-              noweducation:noweducation=='0' ? '中专' : noweducation=='1' ?'专科' :noweducation=='2' ?'本科' :noweducation=='3' ?'研究生' :''
+  //           this.applyMajorList.map(data=>{
+  //             if(item.trainmajor==data.code){
+  //               console.log(data.text);
+  //               item.trainmajor=data.text
+  //             }
+  //           })
+  //           const { state } = item;
+  //           const { stafftype } = item;
+  //           const {noweducation}=item;
+  //           return {
+  //             ...item,
+  //             noflag: state == '0' ? false : state == '2' ? true : '',
+  //             flag: state == '0' ? false : state == '1' ? true : '',
+  //             state: state == '0' ? '未审核' : state == '1' ? '审核通过' : state == '2' ? '审核未通过' : '',
+  //             stafftype: stafftype == "0" ? '本单位住院医师' : stafftype == '1' ? '外单位委托培养住院医师' : stafftype == '2' ? '面向社会招收住院医师' : '',
+  //             noweducation:noweducation=='0' ? '中专' : noweducation=='1' ?'专科' :noweducation=='2' ?'本科' :noweducation=='3' ?'研究生' :''
 
-            }
-          })
-        }
-      })
+  //           }
+  //         })
+  //       }
+  //     })
 
-  }
+  // }
   // currentPageDataChange($event): void {
   //   this. basedataAry= $event;
   //   this.refreshStatus();

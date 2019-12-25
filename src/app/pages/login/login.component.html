@@ -1,14 +1,116 @@
 <div class="login-content">
-    <div class="login-content-header">
-        <h1 class="header-title">2019年住院医师规范化培训年度业务水平测试（西医）</h1>
+  <div class="login-header">
+    2020年考试信息审核系统
+  </div>
+  <div class="login-intro">
+    EXAMINATION CHECK SYSTEM
+  </div>
+  <div class="phoneNum">
+    <p>客服电话:010-629000000</p>
+  </div>
+  <div>
+    <form action="" [formGroup]="loginForm" (ngSubmit)="submitForm()" class="FormGroup"  *ngIf="flag">
+      <p class="login-user">用户登录</p>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" >用户名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="用户名不能为空">
+          <input nz-input formControlName="loginusername"  />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" >密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="密码不能为空">
+          <input nz-input formControlName="loginpassword" type="password" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" [nzNoColon]="true" (click)="createSecurityCode()"
+          style="width:100px;height:35px;background:#ccc;cursor: pointer;
+        font-size: 16px;margin-left:66px; text-align: center;line-height: 35px;color:#fff;margin-top:3px;margin-bottom: 10px;">{{code}}</nz-form-label>
+        <nz-form-control  [nzSm]="10" [nzXs]="24" >
+          <nz-input-group [nzSuffix]="suffixTemplate" style="width:260px;" >
+            <input [type]='text' nz-input placeholder="请输入验证码" [(ngModel)]="yzmcode"
+              style="width: 160px;height:35px;margin-left: 20px;border-radius:0 " name="password"
+              formControlName="yzmcode" />
+          </nz-input-group>
+        </nz-form-control>
+        <p class="login-register" (click)="LoginRegister()">没有账号？去注册</p>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzType="primary"  class="login-btn" >登陆</button>
+      </nz-form-item>
+
+    </form>
+    <form nz-form  [formGroup]="registerForm" (ngSubmit)="registersubmitForm()" class="formGroup" *ngIf="!flag">
+      <p class="register-user">用户注册</p>
+      <nz-form-item class="form-item">
+        <nz-form-label [nzSpan]="7"  style="margin-left:-25px;">省份</nz-form-label>
+        <nz-form-control nzErrorTip="请选择省份" [nzSm]="14" [nzXs]="24">
+          <nz-select style="width: 260px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
+            formControlName="provincename" >
+            <nz-option *ngFor="let singlePro of provinceTextList" [nzValue]="singlePro.code"
+              [nzLabel]="singlePro.value">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item  class="form-item">
+        <nz-form-label [nzSpan]="7"  style="margin-left:-25px;">市区</nz-form-label>
+        <nz-form-control nzErrorTip="请选择市区" [nzSm]="14" [nzXs]="24">
+          <nz-select style="width: 260px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
+            formControlName="cityname" (ngModelChange)="cityChange($event)">
+            <nz-option *ngFor="let singleCity of cityTextList" [nzValue]="singleCity.code"
+              [nzLabel]="singleCity.value">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item  class="form-item"> 
+        <nz-form-label [nzSpan]="7"  style="margin-left:-25px;">学校</nz-form-label>
+        <nz-form-control nzErrorTip="请选择学校" [nzSm]="14" [nzXs]="24">
+          <nz-select style="width: 260px;" nzShowSearch nzAllowClear nzPlaceHolder="请选择"
+            formControlName="schoolname">
+            <nz-option *ngFor="let singleschool of schoolTextList" [nzValue]="singleschool.code"
+              [nzLabel]="singleschool.name">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item  class="form-item"> 
+        <nz-form-label [nzSpan]="7"  style="margin-left:-25px;">用户名</nz-form-label>
+        <nz-form-control nzErrorTip="用户名不能为空" [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="registername">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item  class="form-item"> 
+        <nz-form-label [nzSpan]="7"  style="margin-left:-25px;">密码</nz-form-label>
+        <nz-form-control nzErrorTip="密码不能为空" [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="registerpassword" type="password" [(ngModel)]="registerpsd">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item  class="form-item"> 
+        <nz-form-label [nzSpan]="7"  style="margin-left:-25px;">确认密码</nz-form-label>
+        <nz-form-control nzErrorTip="密码不能为空" [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="registerrepassword" type="password" [(ngModel)]="registerrespsd">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item  class="form-item"> 
+        <button nz-button nzType="primary" class="login-register-btn">注册</button>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <!-- <div class="login-content-header">
+        <h1 class="header-title">2019年水平测试</h1>
         <h2 class="header-subtitle">考生信息审核</h2>
-    </div>
-  <div class="zhupei">
+    </div> -->
+  <!-- <div class="zhupei">
     <div class="login-list">
       <ul>
         <!-- <li [ngClass]="{'active':singlechoice.active}"  *ngFor="let singlechoice of loginchoice;let i=index">
         {{singlechoice.name}}qqq
-      </li> -->
+      </li> 
 
         <li [ngClass]="{'active':item.active }" *ngFor="let item of loginchoice;let i =index" (click)="toggle(i)">
           {{item.name}}
@@ -88,7 +190,7 @@
         </nz-input-group>
         </nz-form-control>
 
-      </nz-form-item> -->
+      </nz-form-item> 
         <nz-form-item>
           <button nz-button nzType="primary" nzBlock style="margin-left: 0;width:80%;margin:0 10%">
             登陆
@@ -167,7 +269,7 @@
           </nz-input-group>
           </nz-form-control>
   
-        </nz-form-item> -->
+        </nz-form-item> 
         <nz-form-item>
           <button nz-button nzType="primary" nzBlock style="margin-left: 0;width:80%;margin:0 10%">
             登陆
@@ -175,5 +277,5 @@
         </nz-form-item>
       </form>
     </div>
-  </div>
+  </div> -->
 </div>

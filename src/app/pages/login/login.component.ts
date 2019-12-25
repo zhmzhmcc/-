@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
 import { LoginForm } from './login.type'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserDataService } from '../welcome/user-data.service';
+import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 // import * as Mock from 'mockjs';
+import { NzModalService } from 'ng-zorro-antd';
 
 
 @Component({
@@ -20,50 +22,33 @@ export class LoginComponent implements OnInit {
     { name: '考试', active: true },
     { name: '测试', active: false }
   ];
-  
-  
-    //{
-    //   "code": 1,
-    //   "msg": "请求接口成功",
-    //   "data|20": [
-    //     {
-    //       'id|+1': 1,
-    //       'name': '@cname',
-    //       'status': 0,
-
-
-
-    //     }
-    //]
-    //}
-
+  flag:boolean = true;
   listOfTagOptions: '请选择';
   code = '23tb';
   flaga: boolean = false;
-  // flagb: boolean = true;
   form = [];
   selectedValue: any;
   selectedValuebase: any;
   selectedValuesubject: any;
-  // genderChange(e) {
-  //   console.log(e);
-  // };
   loginForm: FormGroup;
-
   yzmcode: string;
   assd = "";
   applyMajorList: any;
   provinceTextList: any;
+  cityTextList:any;
   singlePro: any;
   basename: any;
- 
+  cityname: any;
+  schoolTextList: any;
+  provinceTextListData: any;
+  schoolTextListdata: any;
+  registerForm: FormGroup;
+  registerpsd:any;
+  registerrespsd: any;
+
   submitForm(): void {
- 
-   
-    
     const loginForm = this.loginForm
     const { controls } = loginForm
-
     for (const i in this.loginForm.controls) {
       this.loginForm.controls[i].markAsDirty();
       this.loginForm.controls[i].updateValueAndValidity();
@@ -73,8 +58,6 @@ export class LoginComponent implements OnInit {
         nzDuration: 1000, 
         nzPauseOnHover: true,
         nzAnimate: true
-
-
       })
       return
 
@@ -97,58 +80,47 @@ export class LoginComponent implements OnInit {
     else{
       // sss
       // console.log('验证成功', loginForm.value);
-      const { provincename, basename, subjectname, password, yzmcode } = loginForm.value;
+      const {loginusername,loginpassword,yzmcode  } = loginForm.value;
       const loginParams = {
-        provincename,
-        basename,
-        subjectname,
-        password,
+        loginusername,
+        loginpassword,
         yzmcode
       }
-      // const args={
-      //   "cityCode":provincename,
-      //   "baseCode":basename,
-      //   "majorCode":subjectname,
-      //   "password": "000000"
-      // }
+      
      const args= {
-        "cityCode": provincename,
-        "baseCode": basename,
-        "majorCode": subjectname,
+        "loginusername":loginusername,
         "password": '000000',
       }
+      const loginFormVal=loginForm.value;
+      console.log(loginFormVal);
+      window.localStorage['userMajor']=loginFormVal.loginusername
+      this.route.navigate(['/welcome/userinfo']);
+           
   
       //登陆
-      this.http.post('/api/loginXY',args,{ 
-        headers: new HttpHeaders({'Content-Type': 'text/plain; charset=UTF-8'}), 
-        responseType: "text"
-      }).subscribe((res)=>{
-        const data = JSON.parse(decodeURIComponent(res));
-        const datas=JSON.parse(data.serviceResult);
-        console.log(datas);
-        // console.log(typeof(JSON.parse(datas)));  
-        if(datas.status==0){
-          this.message.create('error',datas.message,{
-            nzDuration: 2000, 
-            nzPauseOnHover: true,
-            nzAnimate: true,
-          });
-        }else{
-          const loginFormVal=loginForm.value;
-           console.log(loginFormVal);
-           window.localStorage['userMajor']=loginFormVal.subjectname
+      // this.http.post('/api/loginXY',args,{ 
+      //   headers: new HttpHeaders({'Content-Type': 'text/plain; charset=UTF-8'}), 
+      //   responseType: "text"
+      // }).subscribe((res)=>{
+      //   const data = JSON.parse(decodeURIComponent(res));
+      //   const datas=JSON.parse(data.serviceResult);
+      //   console.log(datas);
+      //   // console.log(typeof(JSON.parse(datas)));  
+      //   if(datas.status==0){
+      //     this.message.create('error',datas.message,{
+      //       nzDuration: 2000, 
+      //       nzPauseOnHover: true,
+      //       nzAnimate: true,
+      //     });
+      //   }else{
+      //     const loginFormVal=loginForm.value;
+      //      console.log(loginFormVal);
+      //      window.localStorage['userMajor']=loginFormVal.subjectname
+      //     this.route.navigate(['/welcome/userinfo']);
            
-          this.route.navigate(['/welcome/userinfo']);
-           
-        }
-
-  
-      })
-  
-       console.log('验证成功', loginParams);
-      
-      
-      
+      //   }  
+      // })
+     
       //const Random = Mock.Random;
       // this.http.get('http://localhost:8080/getData').subscribe(
       //   (res) => {
@@ -158,44 +130,72 @@ export class LoginComponent implements OnInit {
     }
 
   }
-  constructor(private fb: FormBuilder, private route: Router, private http: HttpClient, private message: NzMessageService,private serve:UserDataService
+  registersubmitForm():void{
+    const registerForm = this.registerForm
+    const { controls } = registerForm
+    console.log(registerForm)
+    // for (const i in this.registerForm.controls) {
+    //   this.loginForm.controls[i].markAsDirty();
+    //   this.loginForm.controls[i].updateValueAndValidity();
+    // }
+    if (!registerForm.valid) {
+      this.message.info('请填写完整信息', {
+        nzDuration: 1000, 
+        nzPauseOnHover: true,
+        nzAnimate: true
+      })
+      return
+    }
+    if (this.registerpsd != this.registerrespsd) {
+      this.message.error("两次输入密码不正确",{
+        nzDuration: 1000, 
+        nzPauseOnHover: true,
+        nzAnimate: true
+      })
+
+    }else{
+      this.modelService.info({
+        nzTitle: '提示',
+        nzContent: "注册成功",
+        nzOnOk:()=>{
+          //this.route.navigate(['/login'])
+        }
+      })
+      
+      this.flag=true
+    }
+
+
+  }
+  constructor(private fb: FormBuilder, private route: Router, private http: HttpClient, 
+    private message: NzMessageService,private serve:UserDataService , private modelService:NzModalService
   ) { }
   ngOnInit(): void {
-    
-    // this.http.post('/api/user3/login',{
-    //   params:{
-    //     login:'1874403800',
-    //     pwd:'000000'
-
-    //   }
-    // }).subscribe((res)=>{
-    //   console.log(res)
-
-    // })
-    
     this.http.get("../../assets/dynamicData/applyMajor.json").subscribe((res) => {
       this.applyMajorList = res['classify']
-      console.log(this.applyMajorList);
-
-    })
-    this.http.get("../../assets/dynamicData/trainBase.json").subscribe((res) => {
-      this.provinceTextList = res['province_list']
-      //console.log(this.provinceTextList);
-
     })
     this.http.get("../../assets/dynamicData/trainBase.json").subscribe((res)=>{
-      this.basename=res["city_list"]
+      this.provinceTextList= res['province_list'];
+      this.cityTextList=res["city_list"];
+      this.schoolTextListdata=res["school_list"][0];
+      this.schoolTextList=this.schoolTextListdata['131000'];
     })
     this.createSecurityCode();
     this.loginForm = this.fb.group({
-      provincename: [null, [Validators.required]],
-      basename: [null, [Validators.required]],
-      subjectname: [null, [Validators.required]],
-      password: [null, [Validators.required]],
+      loginusername: [null, [Validators.required]],
+      loginpassword: [null, [Validators.required]],
       yzmcode: [null, [Validators.required]],
-      remember: [true]
     });
-    console.log('验证成功', this.loginForm.value);
+    this.registerForm = this.fb.group({
+      provincename:[null, [Validators.required]],
+      cityname:[null, [Validators.required]],
+      schoolname:[null, [Validators.required]],
+      registername:[null, [Validators.required]],
+      registerpassword:[null, [Validators.required]],
+      registerrepassword:[null, [Validators.required]]
+
+    })
+    console.log('验证成功', this.registerForm.value);
     
     //let form = document.getElementsByClassName("loginForm");//添加到body里面才可以应用
     ///$(document).append(this.form)  
@@ -211,6 +211,14 @@ export class LoginComponent implements OnInit {
     //console.log(jsonStr11);
 
   }
+  //注册
+  LoginRegister(){
+    this.flag = false;
+  }
+  //选择城市改变学校
+  cityChange(e){
+     this.schoolTextList = this.schoolTextListdata[e]
+  }
   toggle(activeNumber: number) {
     this.loginchoice = this.loginchoice.map((item, index) => {
       return {
@@ -218,23 +226,8 @@ export class LoginComponent implements OnInit {
         active: activeNumber === index,
       }
     })
-
-
-    // if (activeNumber == 0) {
-    //   this.flaga = false;
-    //   // this.flagb = true;
-    // } else {
-    //   // this.flagb = false;
-    //   this.flaga = true;
-    // }
-    // this.flaga = !this.flaga;
-    // this.flagb = !this.flagb;
-
-
-
-
-
   }
+  //获取验证码
   createSecurityCode() {
     this.code = "";
     var len = 4;
